@@ -30,49 +30,27 @@ Deep Learning (IF25-40401) · Teknik Informatika ITERA · Semester Ganjil 2026/2
 
 Catatan eksperimen singkat (apa yang dicoba, apa yang berhasil/gagal):
 
+- **Tuning jumlah epoch**: percobaan awal pakai **15 epoch**, lalu diturunkan ke **8 epoch**
+  supaya setara dengan model pembanding dosen (ResNet-18) yang juga dilatih 8 epoch —
+  jadi perbandingannya apple-to-apple.
+- **Hasil perbandingan**: pada jumlah epoch yang sama, Macro-F1 model dosen ≈ **0,92**,
+  model kami (EfficientNet-B2) ≈ **0,94** — backbone EfficientNet-B2 unggul tipis di setting epoch setara.
+
 ## Cara Reproduksi
 
-Pelatihan dilakukan lewat notebook `EfficientNet_Trash_Classification_Training.ipynb`
-di Google Colab (GPU). Langkahnya:
-
-**1. Siapkan data di Google Drive**
-
-Unggah ke folder `MyDrive/Studio2_DeepLearning/`:
-
-- `studio2-sampah.zip` — dataset (berisi `train/` dan `val/`)
-- `starter_kit-*.zip` — starter kit resmi (`train_baseline.py`, `evaluate.py`, dll.)
-
-Struktur data setelah diekstrak: `<data>/<nama_kelas>/*.jpg`, dengan 5 kelas:
-`botol_plastik`, `gelas_plastik`, `kertas_kardus`, `saset_kemasan`, `styrofoam`.
-
-**2. Instal dependensi**
-
 ```bash
-pip install torch torchvision transformers scikit-learn pillow
+pip install torch torchvision transformers pillow
+python evaluate.py --submission ./submission --data ./my_val
 ```
 
-**3. Jalankan notebook (sel berurutan)**
+- `--data` = folder validasi berstruktur `<data>/<nama_kelas>/*.jpg`, 5 kelas:
+  `botol_plastik`, `gelas_plastik`, `kertas_kardus`, `saset_kemasan`, `styrofoam`.
+- Skrip mencetak Macro-F1, akurasi, F1 per kelas, dan confusion matrix.
 
-| Tahap | Sel | Yang dilakukan |
-|-------|-----|----------------|
-| Mount Drive & ekstrak | Import Dataset from Drive | `drive.mount`, ekstrak dataset + starter kit ke `/content/` |
-| Cek data | (cek per kelas) | hitung jumlah gambar per kelas di `../train` |
-| Baseline | Eksekusi train_baseline.py | `python -u train_baseline.py --data ../train --epochs 8` (ResNet-18, pembanding) |
-| Inisialisasi B2 | Inisialisasi EfficientNet-B2 | `AutoModelForImageClassification.from_pretrained("google/efficientnet-b2", num_labels=5)` |
-| Augmentasi | Persiapan Data dan Augmentasi | transform train (RandomResizedCrop 0,7–1,0, flip H, rotasi ±15°, ColorJitter 0,2) + val (Resize 288 → CenterCrop 260) |
-| Training B2 | Fine-Tuning EfficientNet-B2 | 8 epoch, AdamW lr 1e-4 + CosineAnnealingLR, `CrossEntropyLoss(label_smoothing=0,1)`, batch 16; simpan bobot terbaik tiap Macro-F1 naik |
-| Bikin submission | Pembuatan File Submission | tulis `submission/model.py` + `config.json`, copy `model_best.pth` → `model.pth` |
-| Evaluasi & backup | EKSEKUSI CODE EVALUATE | `python evaluate.py --submission ./submission_b2 --data ./my_val`, lalu backup ke Drive |
-
-**4. Evaluasi lokal (opsional, tanpa Colab)**
-
-```bash
-python evaluate.py --submission ./submission --data ./my_val --batch-size 32 --out hasil.json
-```
-
-`--submission` = folder berisi `model.py` + `model.pth`, `--data` = folder validasi
-berstruktur `<data>/<nama_kelas>/*.jpg`. Skrip mencetak Macro-F1, akurasi, F1 per kelas,
-dan confusion matrix.
+Melatih ulang dari nol: jalankan `EfficientNet_Trash_Classification_Training.ipynb` di
+Google Colab (GPU) — dataset `studio2-sampah.zip` + starter kit di folder Drive
+`Studio2_DeepLearning/`, lalu eksekusi sel berurutan (8 epoch). Hasilnya folder
+`submission/` (model.py, config.json, model.pth).
 
 ## Struktur Repositori
 

@@ -6,9 +6,9 @@ Deep Learning (IF25-40401) · Teknik Informatika ITERA · Semester Ganjil 2026/2
 
 | No | Nama Lengkap           |   NIM   | Kontribusi utama |
 |----|------------------------|---------|------------------|
-| 1  |Akhdan Arif Prayoga,    |122140099| Mengedit Readme  |
-| 2  |Ribka Hana Josephine S. |123140103| Melihat Readme   |
-| 3  |Hezkiel Rajani Aritonang|123140118| Membaca Readme   |
+| 1  |Akhdan Arif Prayoga,    |122140099| F2P              |
+| 2  |Ribka Hana Josephine S. |123140103| Whale (VIP)      |
+| 3  |Hezkiel Rajani Aritonang|123140118| FFA              |
 
 ## Ringkasan Pendekatan
 

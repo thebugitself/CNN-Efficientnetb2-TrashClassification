@@ -15,10 +15,10 @@ Deep Learning (IF25-40401) · Teknik Informatika ITERA · Semester Ganjil 2026/2
 - **Arsitektur / backbone**: EfficientNet-B2
 - **Strategi pelatihan**: Learning Rate '0,001', Epochs '8', Optimizer 'Adam'
 - **Data tambahan**: tidak ada
-- **Ukuran input & preprocessing**: input 260x260 piksel (ukuran bawaan EfficientNet-B2).
-  Training: RandomResizedCrop(260, scale 0,7-1,0), flip horizontal, rotasi ±15°,
-  ColorJitter (brightness/contrast/saturation 0,2). Validasi/inferensi: Resize(288) lalu
-  CenterCrop(260). Normalisasi mean [0,485; 0,456; 0,406], std [0,4785; 0,4733; 0,4743].
+- **Ukuran input & preprocessing**: 260×260 piksel (ukuran bawaan EfficientNet-B2).
+  - **Training**: `RandomResizedCrop(260, scale=0,7–1,0)`, flip horizontal, rotasi ±15°, `ColorJitter` (brightness/contrast/saturation 0,2).
+  - **Validasi & inferensi**: `Resize(288)` lalu `CenterCrop(260)` — sama dengan `get_transform()` di `submission/model.py`.
+  - **Normalisasi**: mean `[0,485; 0,456; 0,406]`, std `[0,4785; 0,4733; 0,4743]` (bawaan EfficientNet-B2 dari Hugging Face).
 
 ## Hasil
 

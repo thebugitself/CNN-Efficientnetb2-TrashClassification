@@ -1,22 +1,26 @@
-import torch
-import torch.nn as nn
+from pathlib import Path
 from torchvision import transforms
-import timm
+from transformers import (
+    EfficientNetConfig,
+    EfficientNetForImageClassification
+)
+
+class SampahEfficientNetB2(EfficientNetForImageClassification):
+    def forward(self, x):
+        return super().forward(pixel_values=x).logits
 
 def get_model():
-    """Bangun arsitektur saja — JANGAN mengunduh bobot atau memuat model.pth di sini."""
-    # pretrained=False karena akan memuat bobot dari model.pth
-    # num_classes=5 mengatur agar output layer (logits) berukuran [batch, 5]
-    model = timm.create_model('efficientnet_b2', pretrained=False, num_classes=5)
-    return model
+    config_path = Path(__file__).resolve().parent / "config.json"
+    config = EfficientNetConfig.from_json_file(str(config_path))
+    return SampahEfficientNetB2(config)
 
 def get_transform():
-    """Transform validasi: PIL.Image (RGB) -> Tensor [3, H, W]."""
-    # Transformasi ini KHUSUS untuk evaluasi/validasi.
-    # Resolusi bawaan EfficientNet-B2 adalah 260x260.
-    transform = transforms.Compose([
-        transforms.Resize((260, 260)),
+    return transforms.Compose([
+        transforms.Resize(288),
+        transforms.CenterCrop(260),
         transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+        transforms.Normalize(
+            mean=[0.485, 0.456, 0.406],
+            std=[0.47853944, 0.4732864, 0.47434163]
+        )
     ])
-    return transform

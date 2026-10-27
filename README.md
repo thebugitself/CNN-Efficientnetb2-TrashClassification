@@ -1,4 +1,4 @@
-# Studio 2 — Klasifikasi Sampah · Kelompok 4
+# Studio 2 — Klasifikasi Sampah · Kelompok 4B (akhdan n pren)
 
 Deep Learning (IF25-40401) · Teknik Informatika ITERA · Semester Ganjil 2026/2027
 
@@ -25,7 +25,7 @@ Deep Learning (IF25-40401) · Teknik Informatika ITERA · Semester Ganjil 2026/2
 | Putaran | Commit | Macro-F1 (split validasi lokal) | Macro-F1 (diumumkan asisten) |
 |---------|--------|----------------------------------|------------------------------|
 | Preview 1 (14 Okt) |bc9e24a | 0,9412 | 0,9316 |
-| Preview 2 (21 Okt) |b845274 | 0,9432 | |
+| Preview 2 (21 Okt) |b845274 | 0,9432 | 0,9316 |
 | Final (25 Okt)     | | | |
 
 Catatan eksperimen singkat (apa yang dicoba, apa yang berhasil/gagal):
